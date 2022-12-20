@@ -73220,6 +73220,7 @@ function getNode(versionSpec, stable, checkLatest, auth, arch = os_1.default.arc
         let isNightly = versionSpec.includes('nightly');
         let osPlat = os_1.default.platform();
         let osArch = translateArchToDistUrl(arch);
+        core.info(`isNightly: ${isNightly}`);
         if (isLtsAlias(versionSpec)) {
             core.info('Attempt to resolve LTS alias from manifest...');
             // No try-catch since it's not possible to resolve LTS alias without manifest
@@ -73514,6 +73515,7 @@ function queryDistForMatch(versionSpec, arch = os_1.default.arch(), nodeVersions
     return __awaiter(this, void 0, void 0, function* () {
         let osPlat = os_1.default.platform();
         let osArch = translateArchToDistUrl(arch);
+        core.info(`queryDistForMatch: ${versionSpec} ${osPlat} ${osArch}`);
         // node offers a json list of versions
         let dataFileName;
         switch (osPlat) {
@@ -73557,6 +73559,7 @@ function getVersionsFromDist(versionSpec) {
             allowRetries: true,
             maxRetries: 3
         });
+        core.info(`getVersionsFromDist: ${initialUrl} ${dataUrl}`);
         let response = yield httpClient.getJson(dataUrl);
         return response.result || [];
     });

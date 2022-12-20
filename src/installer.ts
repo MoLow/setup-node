@@ -44,6 +44,8 @@ export async function getNode(
   let osPlat: string = os.platform();
   let osArch: string = translateArchToDistUrl(arch);
 
+  core.info(`isNightly: ${isNightly}`);
+
   if (isLtsAlias(versionSpec)) {
     core.info('Attempt to resolve LTS alias from manifest...');
 
@@ -454,6 +456,7 @@ async function queryDistForMatch(
   let osPlat: string = os.platform();
   let osArch: string = translateArchToDistUrl(arch);
 
+  core.info(`queryDistForMatch: ${versionSpec} ${osPlat} ${osArch}`);
   // node offers a json list of versions
   let dataFileName: string;
   switch (osPlat) {
@@ -503,6 +506,7 @@ export async function getVersionsFromDist(
     allowRetries: true,
     maxRetries: 3
   });
+  core.info(`getVersionsFromDist: ${initialUrl} ${dataUrl}`);
   let response = await httpClient.getJson<INodeVersion[]>(dataUrl);
   return response.result || [];
 }
